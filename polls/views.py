@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 def index(request):
@@ -9,7 +9,11 @@ def index(request):
 
 
 def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+    print("hi" + str(question_id))
+    print(request.method)
+    return JsonResponse({
+        'message': 'hi 안녕'
+    })
 
 
 def results(request, question_id):
