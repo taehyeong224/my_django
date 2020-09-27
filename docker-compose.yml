@@ -1,0 +1,29 @@
+version: "3.5" # 설치된 docker 버전에 따라 다릅니다!
+services:
+  server:
+    container_name: my-django
+    build: . # Dockerfile이 위치한 경로
+    ports:
+      - "8000:8000" # 연결할 포트
+    networks: # 각 컨테이너를 연결하는 네트워크
+      - backend
+    volumes:
+      - ./:/app
+
+  django-db:
+    image: mysql:5.7
+    container_name: django-db-mysql-5.7
+    restart: always
+    ports:
+      - "33306:3306"
+    networks: # 각 컨테이너를 연결하는 네트워크
+        - backend
+    environment:
+      MYSQL_DATABASE: "test"
+      MYSQL_USER: "root"
+      MYSQL_ROOT_PASSWORD: "1111"
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+networks:
+  backend:
+    driver: bridge
